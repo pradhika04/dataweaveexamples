@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="employee" format="json">
+      <types:shape format="weave" example="employee.json"><![CDATA[%dw 2.0
+
+type employee = {|
+  employees: Array<{|    employee: String,     id: String,     addresss: String,     salary: String,     address: String  |}>
+|} {"example": "{\\\"employees\\\":[{\\\"employee\\\":\\\"abc\\\",\\\"id\\\":\\\"123\\\",\\\"addresss\\\":\\\"xyz\\\",\\\"salary\\\":\\\"50000\\\"},{\\\"employee\\\":\\\"\\\",\\\"id\\\":\\\"123\\\",\\\"address\\\":\\\"xyz\\\",\\\"salary\\\":\\\"77777\\\"},{\\\"employee\\\":\\\"\\\",\\\"id\\\":\\\"456\\\",\\\"address\\\":\\\"abc\\\",\\\"salary\\\":\\\"77777\\\"}]}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="itemdetails" format="json">
+      <types:shape format="weave" example="examples/itemdetails-1.json"><![CDATA[%dw 2.0
+
+type itemdetails = Array<{|  Type: Number {"typeId": "int"},   AcctID: Number {"typeId": "int"}|}> {"example": "[{\\\"Type\\\":4,\\\"AcctID\\\":1001},{\\\"Type\\\":4,\\\"AcctID\\\":1010},{\\\"Type\\\":5,\\\"AcctID\\\":1011}]"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#c7914c55-2a85-4cf5-b1be-e501aa2dba5a">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="itemdetails"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#ebcbbcec-de98-42be-af49-6fce4a802d88">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="itemdetails"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>
